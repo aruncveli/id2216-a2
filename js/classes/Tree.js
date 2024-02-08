@@ -1,4 +1,4 @@
-class Building extends Sprite {
+class Tree extends Sprite {
     constructor({position = {x: 0, y: 0}}) {
         super({
             position,

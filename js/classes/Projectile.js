@@ -2,8 +2,7 @@ class Projectile extends Sprite {
     constructor({position = {x: 0, y: 0}, enemy}) {
         super({position, imageSrc: 'img/stone.png'})
         this.velocity = {
-            x: 0,
-            y: 0
+            x: 0, y: 0
         }
         this.enemy = enemy
         this.radius = 1
@@ -12,10 +11,7 @@ class Projectile extends Sprite {
     update() {
         this.draw()
 
-        const angle = Math.atan2(
-            this.enemy.center.y - this.position.y,
-            this.enemy.center.x - this.position.x
-        )
+        const angle = Math.atan2(this.enemy.center.y - this.position.y, this.enemy.center.x - this.position.x)
 
         const power = 5
         this.velocity.x = Math.cos(angle) * power

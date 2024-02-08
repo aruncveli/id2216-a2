@@ -7,7 +7,33 @@ canvas.height = 390
 c.fillStyle = 'white'
 c.fillRect(0, 0, canvas.width, canvas.height)
 
-const placementTiles = [new PlacementTile({position: {x: 290, y: 110}})]
+const placementPositions = [{x: 70, y: 69}, {x: 130, y: 69}, {x: 169, y: 167}, {
+    x: 249, y: 231
+}, {
+    x: 289, y: 110
+}, {
+    x: 307, y: 9
+}, {
+    x: 450, y: 69
+}, {
+    x: 547, y: 127
+}, {
+    x: 490, y: 8
+}, {
+    x: 590, y: 48
+}, {
+    x: 348, y: 131
+}, {
+    x: 350, y: 190
+}, {
+    x: 390, y: 250
+}, {
+    x: 450, y: 250
+}, {
+    x: 570, y: 342
+}]
+
+const placementTiles = placementPositions.map((position) => new PlacementTile({position}))
 
 const image = new Image()
 
@@ -21,15 +47,13 @@ const enemies = []
 function spawnEnemies(spawnCount) {
     for (let i = 1; i < spawnCount + 1; i++) {
         const xOffset = i * 150
-        enemies.push(
-            new Enemy({
-                position: {x: waypoints[0].x - xOffset, y: waypoints[0].y}
-            })
-        )
+        enemies.push(new Enemy({
+            position: {x: waypoints[0].x - xOffset, y: waypoints[0].y}
+        }))
     }
 }
 
-const buildings = []
+const trees = []
 let activeTile;
 let enemyCount = 3
 let hearts = 10
@@ -51,7 +75,6 @@ function animate() {
             document.querySelector('#hearts').innerHTML = hearts
 
             if (hearts === 0) {
-                console.log('game over')
                 cancelAnimationFrame(animationId)
                 document.querySelector('#gameOver').style.display = 'flex'
             }
@@ -68,19 +91,19 @@ function animate() {
         tile.update(mouse)
     })
 
-    buildings.forEach((building) => {
-        building.update()
-        building.target = null
+    trees.forEach((tree) => {
+        tree.update()
+        tree.target = null
         const validEnemies = enemies.filter((enemy) => {
-            const xDifference = enemy.center.x - building.center.x
-            const yDifference = enemy.center.y - building.center.y
+            const xDifference = enemy.center.x - tree.center.x
+            const yDifference = enemy.center.y - tree.center.y
             const distance = Math.hypot(xDifference, yDifference)
-            return distance < enemy.radius + building.radius
+            return distance < enemy.radius + tree.radius
         })
-        building.target = validEnemies[0]
+        tree.target = validEnemies[0]
 
-        for (let i = building.projectiles.length - 1; i >= 0; i--) {
-            const projectile = building.projectiles[i]
+        for (let i = tree.projectiles.length - 1; i >= 0; i--) {
+            const projectile = tree.projectiles[i]
 
             projectile.update()
 
@@ -104,31 +127,27 @@ function animate() {
                     }
                 }
 
-                building.projectiles.splice(i, 1)
+                tree.projectiles.splice(i, 1)
             }
         }
     })
 }
 
 const mouse = {
-    x: undefined,
-    y: undefined
+    x: undefined, y: undefined
 }
 
 canvas.addEventListener('click', (event) => {
     if (activeTile && !activeTile.isOccupied && coins - 50 >= 0) {
         coins -= 50
         document.querySelector('#coins').innerHTML = coins
-        buildings.push(
-            new Building({
-                position: {
-                    x: activeTile.position.x,
-                    y: activeTile.position.y
-                }
-            })
-        )
+        trees.push(new Tree({
+            position: {
+                x: activeTile.position.x, y: activeTile.position.y
+            }
+        }))
         activeTile.isOccupied = true
-        buildings.sort((a, b) => {
+        trees.sort((a, b) => {
             return a.position.y - b.position.y
         })
     }
@@ -141,12 +160,7 @@ window.addEventListener('mousemove', (event) => {
     activeTile = null
     for (const element of placementTiles) {
         const tile = element
-        if (
-            mouse.x > tile.position.x &&
-            mouse.x < tile.position.x + tile.size &&
-            mouse.y > tile.position.y &&
-            mouse.y < tile.position.y + tile.size
-        ) {
+        if (mouse.x > tile.position.x && mouse.x < tile.position.x + tile.size && mouse.y > tile.position.y && mouse.y < tile.position.y + tile.size) {
             activeTile = tile
             break
         }
