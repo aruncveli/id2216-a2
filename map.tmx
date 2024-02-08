@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="42" height="19" tilewidth="20" tileheight="20" infinite="0" nextlayerid="6" nextobjectid="11">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="42" height="19" tilewidth="20" tileheight="20" infinite="0" nextlayerid="6" nextobjectid="12">
  <editorsettings>
   <export target="path-one.js" format="js"/>
  </editorsettings>
  <imagelayer id="2" name="Image Layer 1">
-  <image source="../Downloads/map.png" width="844" height="390"/>
+  <image source="img/map.png" width="844" height="390"/>
  </imagelayer>
  <layer id="1" name="Tile Layer 1" width="42" height="19">
   <data encoding="csv">
@@ -30,8 +30,8 @@
 </data>
  </layer>
  <objectgroup id="5" name="Object Layer 1">
-  <object id="9" x="-16.563" y="139.512">
-   <polyline points="0,0 264.371,0 335.083,79.6299 335.083,117.852 375.216,177.734 516.639,180.282 556.772,217.867 556.135,263.097"/>
+  <object id="11" x="0.666667" y="1.33333">
+   <polyline points="0,0 -64,137.333 240,138.667 318,217.333 318.667,258 360,317.333 499.333,318.667 539.333,357.333 540.667,432.667"/>
   </object>
  </objectgroup>
 </map>
